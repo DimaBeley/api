@@ -6,19 +6,20 @@ import { Users } from './Users';
 
 @Injectable()
 export class UsersService {
+  private users: UpdateUserDto[] = Users;
   create(createUserDto: CreateUserDto) {
     return Users.push(createUserDto);
   }
 
-  findAll() {
-    return Users;
+  findAll(): UpdateUserDto[] {
+    return this.users;
   }
-  findByType(name: string) {
-    return Users.filter((user: CreateUserDto) => name === user.name);
+  findByType(name: string): UpdateUserDto[] {
+    return this.users.filter((user: CreateUserDto) => name === user.name);
   }
 
-  findOne(id: number) {
-    const requestedUser = Users.filter((user: CreateUserDto) => {
+  findOne(id: number): UpdateUserDto[] {
+    const requestedUser = this.users.filter((user: CreateUserDto) => {
       return user.id === id;
     });
     if (!requestedUser) {
@@ -27,20 +28,22 @@ export class UsersService {
     return requestedUser;
   }
 
-  update(id: number, UpdateUserDto: UpdateUserDto) {
-    return Users.map((user: UpdateUserDto) => {
+  update(id: number, updateUserDto: UpdateUserDto) {
+    this.users = this.users.map((user: UpdateUserDto) => {
+      let updated: UpdateUserDto = {};
       if (user.id === id) {
-        console.log(UpdateUserDto, id, 'UpdateUserDto >>>>>>>>>>>>>>>>>>>');
-        return {
+        updated = {
           ...user,
-          ...UpdateUserDto,
+          ...updateUserDto,
         };
+        return updated;
       }
       return user;
     });
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  remove(id: number): UpdateUserDto[] {
+    return this.users.filter((user: CreateUserDto) => id !== user.id);
   }
 }

@@ -23,3 +23,8 @@ Content-Type: application/json
   "name": "Sasha",
   "email": "Sandra@example"
 }
+
+###
+
+DELETE http://localhost:3000/users/9
+###
