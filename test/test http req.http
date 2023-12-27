@@ -4,3 +4,22 @@ GET http://localhost:3000/users/2
 ###
 GET http://localhost:3000/users/user?name=Ivan
 ###
+POST http://localhost:3000/users
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "Jek",
+  "email": "Jorn@example",
+  "id": 9
+}
+
+###
+PATCH http://localhost:3000/users/2
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "Sasha",
+  "email": "Sandra@example"
+}
